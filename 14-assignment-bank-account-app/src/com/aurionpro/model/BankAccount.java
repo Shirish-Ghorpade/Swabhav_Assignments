@@ -49,7 +49,7 @@ public class BankAccount {
 	}
 
 	public void setBalance(double balance) {
-		if(balance <= 0) {
+		if(balance < 0) {
 			throw new NegativeOrZeroAmountException(balance);
 		}
 		this.balance = balance;
@@ -74,11 +74,9 @@ public class BankAccount {
 		this.balance -= amount;
 	}
 
-	
-	
-
 	public static void display(BankAccount accounts[]) {
 		for (int i = 0; i < accounts.length; i++) {
+			System.out.println("---------------------------------------------");
 			System.out.println("Account Number : " + accounts[i].accountNumber);
 			System.out.println("Account Holder Name : " + accounts[i].name);
 			System.out.println("Balance of ccount : " + accounts[i].balance);
