@@ -135,6 +135,7 @@ public class BankAccountTest {
 			System.out.println("1. Display the details of all accounts");
 			System.out.println("2. Display the details of saving accounts");
 			System.out.println("3. Display the details of current accounts");
+			System.out.println("4. Exit");
 			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
@@ -145,6 +146,10 @@ public class BankAccountTest {
 				break;
 			case 3:
 				CurrentAccount.display(accounts);
+				break;
+			case 4:
+				exitOption=true;
+				System.out.println("Sucessfully Exited !!!");
 				break;
 			default:
 				throw new InvalidInputException(choice);
