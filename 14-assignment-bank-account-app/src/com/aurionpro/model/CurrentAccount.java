@@ -22,14 +22,15 @@ public class CurrentAccount extends BankAccount {
 			throw new NegativeOrZeroAmountException(amount);
 		} else if (loan == 0) {
 			super.setBalance(super.getBalance() + amount);
-		} else if (amount <= Math.abs(loan)) {
-			loan += amount;
+		} else if (amount <= loan) {
+			loan -= amount;
 		} else if (amount > loan) {
 			super.setBalance(amount - loan);
+			loan=0;
 		}
 		System.out.println(
 				"You deposited " + amount + " so, current balance of account number " + super.getAccountNumber()
-						+ " is " + super.getBalance() + " and your remaining loan is " + Math.abs(loan));
+						+ " is " + super.getBalance() + " and your remaining loan is " + loan);
 
 	}
 
@@ -39,13 +40,13 @@ public class CurrentAccount extends BankAccount {
 		} else if (amount <= super.getBalance()) {
 			super.setBalance(super.getBalance() - amount);
 		} else if (amount <= super.getBalance() + OVER_DRAFT_LIMIT) {
-			loan = super.getBalance() - amount;
+			loan = amount-super.getBalance();
 			super.setBalance(0);
 		} else if (amount > super.getBalance() + OVER_DRAFT_LIMIT) {
 			throw new OverDraftLimitExceedsException(amount, super.getBalance(), OVER_DRAFT_LIMIT);
 		}
 		System.out.println(
-				"Now your account balance is " + super.getBalance() + " and you have loan of " + Math.abs(loan));
+				"Now your account balance is " + super.getBalance() + " and you have loan of " + loan);
 	}
 
 	public static void display(BankAccount accounts[]) {
