@@ -7,6 +7,10 @@ import java.util.Scanner;
 
 import com.aurionpro.comparator.model.Book;
 import com.aurionpro.comparator.model.BookComparator;
+import com.aurionpro.comparator.model.BookComparator.BookAuthorComparator;
+import com.aurionpro.comparator.model.BookComparator.BookPriceComparator;
+import com.aurionpro.comparator.model.BookComparator.BookPublicationYearComparator;
+import com.aurionpro.comparator.model.BookComparator.BookTitleComparator;
 
 public class BookTest {
 
@@ -32,9 +36,15 @@ public class BookTest {
 			System.out.println("0. Exit");
 			System.out.println("1. Add one more book");
 
-			int n = scanner.nextInt();
-			if (n == 0) {
-				exitOption = true;
+			while (true) {
+				int n = scanner.nextInt();
+				if (n == 0) {
+					exitOption = true;
+					break;
+				}
+				else if(n==1) {
+					break;
+				}
 			}
 			scanner.nextLine();
 		}
@@ -43,16 +53,50 @@ public class BookTest {
 		for (Book book : books) {
 			System.out.println(book);
 		}
+
+		BookTitleComparator sortByTitle = new BookComparator.BookTitleComparator();
+		BookAuthorComparator sortByAuthor = new BookComparator.BookAuthorComparator();
+		BookPriceComparator sortByPrice = new BookComparator.BookPriceComparator();
+		BookPublicationYearComparator descendingSortByPublicationYear = new BookComparator.BookPublicationYearComparator();
+
 		System.out.println("-------------------------------------------------------------------------");
-		System.out.println("After Sorting first by author name then by title finally by price");
-		Collections.sort(books, new BookComparator.BookAuthorComparator().thenComparing(new BookComparator.BookTitleComparator().thenComparing(new BookComparator.BookPriceComparator())));
+		System.out.println("After Sorting books by title in alphabhetical order");
+		Collections.sort(books, sortByTitle);
 		for (Book book : books) {
 			System.out.println(book);
 		}
-		
+
+		System.out.println("-------------------------------------------------------------------------");
+		System.out.println("After Sorting books by author in alphabhetical order");
+		Collections.sort(books, sortByAuthor);
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
+		System.out.println("-------------------------------------------------------------------------");
+		System.out.println("After Sorting books by price in ascending order");
+		Collections.sort(books, sortByPrice);
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
+		System.out.println("-------------------------------------------------------------------------");
+		System.out.println("After Sorting books by publication year in descending order");
+		Collections.sort(books, descendingSortByPublicationYear);
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
+		System.out.println("-------------------------------------------------------------------------");
+		System.out.println("After Sorting first by author name then by title finally by price");
+		Collections.sort(books, sortByAuthor.thenComparing(sortByTitle.thenComparing(sortByPrice)));
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
 		System.out.println("--------------------------------------------------------------------------");
 		System.out.println("After Sorting first by publication year then by price finally by author");
-		Collections.sort(books, new BookComparator.BookPublicationYearComparator().thenComparing(new BookComparator.BookPriceComparator().thenComparing(new BookComparator.BookAuthorComparator())));
+		Collections.sort(books, descendingSortByPublicationYear.thenComparing(sortByPrice.thenComparing(sortByAuthor)));
 		for (Book book : books) {
 			System.out.println(book);
 		}
